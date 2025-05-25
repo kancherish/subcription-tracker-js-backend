@@ -31,6 +31,28 @@ export const getUserSubscription = async (req,res,next)=>{
     }
 }
 
+export const cancelASubscription = async (req,res,next) =>{
+    try {
+        const subcription = await Subscription.findOne({_id:req.params.id});
+        if (!subcription) {
+            return res.status(404).json({message:"no subscription found"})
+
+        }
+        if (req.user._id!==subcription.user._id) {
+            return res.status(401).json({message:"you are not owner"})
+        }
+        if (subcription.status==="cancelled") {
+            return res.status(403).json({message:"subscription already cancelled"})
+        }
+        const subcriptionCancel = await Subscription.update({_id:req.params.id},{$set:{status:"cancelled"}})
+        if (subcriptionCancel.acknowleged) {
+            return res.status(204).json({message:"subscription cancelled succesfully"})
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
 export const getUserAllSubscriptions = async (req,res,next)=>{
     try {
         if (!req.user._id===req.params.id) {
