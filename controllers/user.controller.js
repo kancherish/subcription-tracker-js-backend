@@ -43,11 +43,11 @@ export const updateUser = async (req, res, next) => {
         if (!user) {
             return res.status(404).json({ message: "no subscription found" })
         }
-        if (req.user._id !== user._id) {
+        if (!req.user._id.equals(user._id)) {
             return res.status(401).json({ message: "you are not owner" })
         }
         delete req.body._id
-        const userUpdate = await User.update({ _id: req.params.id }, { $set: { ...req.body } })
+        const userUpdate = await User.updateOne({ _id: req.params.id }, { $set: { ...req.body } })
         if (userUpdate.acknowledged) {
             return res.status(204).json({success:true})
         }
@@ -63,7 +63,7 @@ export const deleteUser = async (req, res, next) => {
         if (!user) {
             return res.status(404).json({ message: "no subscription found" })
         }
-        if (req.user._id !== user._id) {
+        if (!req.user._id.equals(user._id)) {
             return res.status(401).json({ message: "you are not owner" })
         }
         delete req.body._id
