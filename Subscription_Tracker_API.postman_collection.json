@@ -1,0 +1,333 @@
+{
+	"info": {
+		"_postman_id": "9261fad6-a39f-458a-a234-be3676a59319",
+		"name": "Subscription Tracker API",
+		"description": "### Update User Information\n\nThis endpoint allows you to update the information of a specific user identified by their unique ID. In this case, the user ID is `68347f78c9106813f9c5ff39`.\n\n#### Request\n\n- **Method**: PUT\n    \n- **Endpoint**: `{{localurl}}api/v1/user/{userId}`\n    \n- **Path Parameter**:\n    \n    - `userId`: The unique identifier of the user you wish to update (e.g., `68347f78c9106813f9c5ff39`).\n        \n- **Request Body** (Raw JSON):\n    \n    - `name` (string): The new name for the user.\n        \n\n#### Example Request Body:\n\n``` json\n{\n  \"name\": \"sam\"\n}\n\n ```\n\n#### Response\n\n- **Status Code**: `204 No Content`\n    \n- **Content-Type**: `text/xml`\n    \n- **Response Body**: The response does not contain a body. A status code of 204 indicates that the request was successful and that there is no content to return.\n    \n\nThis endpoint is useful for updating user details without needing to retrieve the entire user object first. Ensure that the `name` parameter is provided in the request body to successfully update the user's information.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "35561749"
+	},
+	"item": [
+		{
+			"name": "Sign Up User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"cherry2\",\n    \"password\":\"chex431\",\n    \"email\":\"cherry2@mail.com\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{localurl}}api/v1/auth/signup",
+				"description": "## Signup API\n\nThis endpoint allows users to create a new account by providing their personal details. It is a **POST** request to the endpoint `{{localurl}}api/v1/auth/signup`.\n\n### Request Parameters\n\nThe request body must be sent in JSON format and should contain the following parameters:\n\n- **name** (string): The name of the user. This is a required field.\n    \n- **password** (string): The password for the user's account. This is a required field and should be kept secure.\n    \n- **email** (string): The email address of the user. This is a required field and must be in a valid email format.\n    \n\n### Example Request Body\n\n``` json\n{\n  \"name\": \"cherry\",\n  \"password\": \"chex431\",\n  \"email\": \"cherry@mail.com\"\n}\n\n ```\n\n### Expected Response\n\nUpon a successful signup, the server will respond with a status code indicating the success of the operation, typically a `201 Created`. The response may include a confirmation message and any relevant user information, such as a user ID or token for further authentication.\n\n### Response Format\n\nThe response will generally be in JSON format, containing fields that confirm the successful creation of the user account.\n\n### Notes\n\n- Ensure that all required fields are included in the request body to avoid errors.\n    \n- Use secure practices when handling user passwords and sensitive information."
+			},
+			"response": []
+		},
+		{
+			"name": "Sign In User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"cherry@gmail.com\",\n    \"password\":\"chex431\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{localurl}}api/v1/auth/signin",
+				"description": "## Sign In API\n\nThis endpoint allows users to authenticate themselves by signing in with their email and password. Upon successful authentication, the server will return relevant user information and an authentication token.\n\n### Request\n\n- **Method**: POST\n    \n- **Endpoint**: `{{localurl}}api/v1/auth/signin`\n    \n\n#### Request Body\n\nThe request body must be in JSON format and should contain the following parameters:\n\n- **email** (string): The email address of the user attempting to sign in.\n    \n- **password** (string): The password associated with the user's account.\n    \n\n**Example Request Body**:\n\n``` json\n{\n  \"email\": \"user@example.com\",\n  \"password\": \"userpassword\"\n}\n\n ```\n\n### Response\n\nThe response will be returned in JSON format and typically includes the following fields:\n\n- **token** (string): A JWT token that can be used for subsequent authenticated requests.\n    \n- **user** (object): An object containing user details such as user ID, name, and email.\n    \n\n**Example Response**:\n\n``` json\n{\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n  \"user\": {\n    \"id\": \"12345\",\n    \"name\": \"John Doe\",\n    \"email\": \"user@example.com\"\n  }\n}\n\n ```\n\n### Notes\n\n- Ensure that the email and password are correctly formatted before sending the request.\n    \n- If authentication fails, the server will respond with an appropriate error message and status code."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQwNjRkZGU0YmVjNDM1YjNhYWUwMTUiLCJpYXQiOjE3NDkwNTA1ODksImV4cCI6MTc0OTEzNjk4OX0.7Q0HzqXqE_axX4qAH9zXGiBhu0Us4P-V2T6hzpPVhgQ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{localurl}}api/v1/user",
+				"description": "### API Endpoint: Get User Information\n\n**Method:** GET  \n**URL:** `{{localurl}}api/v1/user`\n\n#### Purpose\n\nThis endpoint is used to retrieve user information from the system. It allows clients to access details related to a specific user.\n\n#### Request Format\n\nThis is a **GET** request and does not require a request body. The request can include query parameters if needed, but these are not specified in the current documentation.\n\n#### Response Format\n\nUpon a successful request, the response will contain user information in a structured format, typically in JSON. The response will include various user attributes, which may include but are not limited to:\n\n- User ID\n    \n- User Name\n    \n- Email\n    \n- Profile Information\n    \n\nThe exact structure of the response will depend on the implementation and may vary."
+			},
+			"response": []
+		},
+		{
+			"name": "Get a User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"<style type=\"text/css\">",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+							"    .tftable tr {background-color:#ffffff;}",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+							"    .tftable tr:hover {background-color:#e0ffff;}",
+							"</style>",
+							"",
+							"<table class=\"tftable\" border=\"1\">",
+							"    <tr>",
+							"        <th>ID</th>",
+							"        <th>Name</th>",
+							"        <th>Email</th>",
+							"        <th>Created At</th>",
+							"        <th>Updated At</th>",
+							"        <th>__v</th>",
+							"    </tr>",
+							"    <tr>",
+							"        <td>{{response.data._id}}</td>",
+							"        <td>{{response.data.name}}</td>",
+							"        <td>{{response.data.email}}</td>",
+							"        <td>{{response.data.createdAt}}</td>",
+							"        <td>{{response.data.updatedAt}}</td>",
+							"        <td>{{response.data.__v}}</td>",
+							"    </tr>",
+							"</table>",
+							"`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    var res = pm.response.json();",
+							"    return { response: res };",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM0N2Y3OGM5MTA2ODEzZjljNWZmMzkiLCJpYXQiOjE3NDg5NzE4MDMsImV4cCI6MTc0OTA1ODIwM30._j61Ou2rtiHutTDYSFgKnC3hbY23mryyHMCSDR7t4TU"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{localurl}}api/v1/user/6830093fb39292aaaa2423a3",
+				"description": "### Get User Details\n\nThis endpoint retrieves detailed information about a specific user based on their unique identifier.\n\n#### Request\n\n- **Method**: GET\n    \n- **URL**: `{{localurl}}api/v1/user/{userId}`\n    \n- **Path Parameter**:\n    \n    - `userId`: The unique identifier of the user whose details are being requested.\n        \n\n#### Response\n\nUpon a successful request, the server responds with a `200 OK` status and a JSON object containing the user's details. The structure of the response is as follows:\n\n- **success** (boolean): Indicates whether the request was successful.\n    \n- **data** (object): Contains the user's information:\n    \n    - `_id` (string): The unique identifier of the user.\n        \n    - `name` (string): The name of the user.\n        \n    - `email` (string): The email address of the user.\n        \n    - `createdAt` (string): The timestamp when the user was created.\n        \n    - `updatedAt` (string): The timestamp when the user details were last updated.\n        \n    - `__v` (integer): The version key for the user document.\n        \n\nThis endpoint is useful for retrieving user information for display or processing within applications."
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM0N2Y3OGM5MTA2ODEzZjljNWZmMzkiLCJpYXQiOjE3NDkwNDk4OTUsImV4cCI6MTc0OTEzNjI5NX0.rJXaHv969KAvYwcIft2eF_fjCeIJQp2RSW1Gy80H5x4"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\"name\": \"sam\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{localurl}}api/v1/user/68347f78c9106813f9c5ff39",
+				"description": "### Update User Information\n\nThis endpoint allows you to update the information of a specific user identified by their unique ID. In this case, the user ID is `68347f78c9106813f9c5ff39`.\n\n#### Request\n\n- **Method**: PUT\n    \n- **Endpoint**: `{{localurl}}api/v1/user/{userId}`\n    \n- **Path Parameter**:\n    \n    - `userId`: The unique identifier of the user you wish to update (e.g., `68347f78c9106813f9c5ff39`).\n        \n- **Request Body** (Raw JSON):\n    \n    - `name` (string): The new name for the user.\n        \n\n#### Example Request Body:\n\n``` json\n{\n  \"name\": \"sam\"\n}\n\n ```\n\n#### Response\n\n- **Status Code**: `204 No Content`\n    \n- **Content-Type**: `text/xml`\n    \n- **Response Body**: The response does not contain a body. A status code of 204 indicates that the request was successful and that there is no content to return.\n    \n\nThis endpoint is useful for updating user details without needing to retrieve the entire user object first. Ensure that the `name` parameter is provided in the request body to successfully update the user's information."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM0N2Y3OGM5MTA2ODEzZjljNWZmMzkiLCJpYXQiOjE3NDkwNDk4OTUsImV4cCI6MTc0OTEzNjI5NX0.rJXaHv969KAvYwcIft2eF_fjCeIJQp2RSW1Gy80H5x4"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "{{localurl}}api/v1/user/68347f78c9106813f9c5ff39",
+				"description": "### DELETE User Endpoint\n\nThis endpoint allows you to delete a user from the system by specifying their unique user ID in the URL.\n\n#### Request\n\n- **Method**: DELETE\n    \n- **URL**: `{{localurl}}api/v1/user/{userId}`\n    \n- **Path Parameter**:\n    \n    - `userId` (string): The unique identifier of the user you wish to delete. In this example, the user ID is `68347f78c9106813f9c5ff39`.\n        \n\n#### Response\n\n- **Status Code**: 204 No Content\n    \n- **Content-Type**: text/xml\n    \n\nA successful deletion will result in a `204 No Content` response, indicating that the request was processed successfully and there is no additional content to return.\n\n#### Notes\n\n- Ensure that the user ID provided is valid and corresponds to an existing user in the system.\n    \n- Deleting a user is irreversible; once deleted, user data cannot be recovered."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQwNjRkZGU0YmVjNDM1YjNhYWUwMTUiLCJpYXQiOjE3NDkwNTA1ODksImV4cCI6MTc0OTEzNjk4OX0.7Q0HzqXqE_axX4qAH9zXGiBhu0Us4P-V2T6hzpPVhgQ"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Netflix Premium\",\n  \"price\": 499,\n  \"currency\": \"INR\",\n  \"frequency\": \"monthly\",\n  \"category\": \"entertainment\",\n  \"paymentMethod\": \"Credit Card\",\n  \"status\": \"active\",\n  \"startDate\": \"2025-05-01T00:00:00.000Z\",\n  \"user\": \"6830093fb39292aaaa2423a3\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{localurl}}api/v1/subscriptions"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Subscription",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQwNjRkZGU0YmVjNDM1YjNhYWUwMTUiLCJpYXQiOjE3NDkwNTA1ODksImV4cCI6MTc0OTEzNjk4OX0.7Q0HzqXqE_axX4qAH9zXGiBhu0Us4P-V2T6hzpPVhgQ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Netflix Premium\",\n  \"price\": 499,\n  \"currency\": \"INR\",\n  \"frequency\": \"monthly\",\n  \"category\": \"entertainment\",\n  \"paymentMethod\": \"Credit Card\",\n  \"status\": \"active\",\n  \"startDate\": \"2025-05-01T00:00:00.000Z\",\n  \"user\": \"6830093fb39292aaaa2423a3\"\n}\n"
+				},
+				"url": "{{localurl}}api/v1/subscriptions/684064dde4bec435b3aae015",
+				"description": "### API Endpoint: Get Subscription Details\n\n**Method:** `GET`  \n**Endpoint:** `{{localurl}}api/v1/subscriptions/{subscriptionId}`\n\nThis endpoint retrieves the details of a specific subscription based on the provided subscription ID. The response will include comprehensive information about the subscription, such as its name, price, currency, frequency, category, payment method, status, start date, user ID, and timestamps for creation and updates.\n\n#### Request Parameters\n\n- **subscriptionId** (path parameter): The unique identifier of the subscription you wish to retrieve. In this example, the subscription ID is `684064dde4bec435b3aae015`.\n    \n\n#### Expected Response Format\n\nOn a successful request, the API will return a `200 OK` status with a JSON response containing the following structure:\n\n``` json\n{\n  \"success\": true,\n  \"data\": [\n    {\n      \"_id\": \"string\",\n      \"name\": \"string\",\n      \"price\": number,\n      \"currency\": \"string\",\n      \"frequency\": \"string\",\n      \"category\": \"string\",\n      \"paymentMethod\": \"string\",\n      \"status\": \"string\",\n      \"startDate\": \"string\",\n      \"user\": \"string\",\n      \"createdAt\": \"string\",\n      \"updatedAt\": \"string\",\n      \"renewalDate\": \"string\",\n      \"__v\": number\n    }\n  ]\n}\n\n ```\n\n- **success**: Indicates whether the request was successful.\n    \n- **data**: An array containing the details of the subscription. Each subscription object includes various fields such as `_id`, `name`, `price`, `currency`, `frequency`, `category`, `paymentMethod`, `status`, `startDate`, `user`, `createdAt`, `updatedAt`, `renewalDate`, and `__v`.\n    \n\nThis endpoint is useful for retrieving detailed information about a subscription, which can be used for display or further processing in applications."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQwNjRkZGU0YmVjNDM1YjNhYWUwMTUiLCJpYXQiOjE3NDkwNTA1ODksImV4cCI6MTc0OTEzNjk4OX0.7Q0HzqXqE_axX4qAH9zXGiBhu0Us4P-V2T6hzpPVhgQ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{localurl}}api/v1/subscriptions",
+				"description": "### API Endpoint: Get Subscriptions\n\n**Method:** `GET`  \n**Endpoint:** `{{localurl}}api/v1/subscriptions`\n\nThis endpoint retrieves a list of subscriptions associated with the user.\n\n#### Request Parameters\n\nThere are no required parameters for this GET request.\n\n#### Response Format\n\nUpon a successful request, the server responds with a `200 OK` status and a JSON object containing the following fields:\n\n- **success** (boolean): Indicates whether the request was successful.\n    \n- **data** (array): An array of subscription objects, each containing the following fields:\n    \n    - **_id** (string): Unique identifier for the subscription.\n        \n    - **name** (string): The name of the subscription.\n        \n    - **price** (number): The price of the subscription.\n        \n    - **currency** (string): The currency in which the price is denominated.\n        \n    - **frequency** (string): The billing frequency (e.g., monthly, yearly).\n        \n    - **category** (string): The category of the subscription.\n        \n    - **paymentMethod** (string): The method used for payment.\n        \n    - **status** (string): The current status of the subscription (e.g., active, cancelled).\n        \n    - **startDate** (string): The date when the subscription starts.\n        \n    - **user** (string): The user associated with the subscription.\n        \n    - **createdAt** (string): The date when the subscription was created.\n        \n    - **updatedAt** (string): The date when the subscription was last updated.\n        \n    - **renewalDate** (string): The date when the subscription will renew.\n        \n    - **__v** (number): Version key for the subscription document.\n        \n\nThis endpoint is useful for retrieving all subscription details for further processing or display in the application."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQwNjRkZGU0YmVjNDM1YjNhYWUwMTUiLCJpYXQiOjE3NDkwNTA1ODksImV4cCI6MTc0OTEzNjk4OX0.7Q0HzqXqE_axX4qAH9zXGiBhu0Us4P-V2T6hzpPVhgQ"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":\"684064dde4bec435b3aae015\",\"price\":699}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{localurl}}api/v1/subscriptions/68406fc8c21d8713d4271510",
+				"description": "## Update Subscription\n\nThis endpoint allows you to update an existing subscription identified by its unique ID. The request modifies the details of the specified subscription, such as its price.\n\n### Request\n\n- **Method**: PUT\n    \n- **URL**: `{{localurl}}api/v1/subscriptions/{subscriptionId}`\n    \n- **Path Parameter**:\n    \n    - `subscriptionId` (string): The unique identifier of the subscription to be updated.\n        \n\n### Request Body\n\nThe request body must be in JSON format and include the following parameters:\n\n- `id` (string): The unique identifier of the subscription being updated. This should match the `subscriptionId` in the URL.\n    \n- `price` (number): The new price for the subscription.\n    \n\n#### Example Request Body\n\n``` json\n{\n  \"id\": \"684064dde4bec435b3aae015\",\n  \"price\": 699\n}\n\n ```\n\n### Response\n\n- **Status Code**: 204 No Content\n    \n- **Content-Type**: text/xml\n    \n\nThe response indicates that the update was successful, and there is no content returned in the body. A status code of 204 signifies that the request was processed successfully without returning any additional content.\n\n### Summary\n\nUse this endpoint to update the price of a specific subscription by providing its ID and the new price in the request body. A successful update will return a 204 status code, confirming that the operation was completed without errors."
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQwNjRkZGU0YmVjNDM1YjNhYWUwMTUiLCJpYXQiOjE3NDkwNTA1ODksImV4cCI6MTc0OTEzNjk4OX0.7Q0HzqXqE_axX4qAH9zXGiBhu0Us4P-V2T6hzpPVhgQ"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Netflix Premium\",\n  \"price\": 499,\n  \"currency\": \"INR\",\n  \"frequency\": \"monthly\",\n  \"category\": \"entertainment\",\n  \"paymentMethod\": \"Credit Card\",\n  \"status\": \"active\",\n  \"startDate\": \"2025-05-01T00:00:00.000Z\",\n  \"user\": \"6830093fb39292aaaa2423a3\"\n}\n"
+				},
+				"url": "{{localurl}}api/v1/subscriptions/68406fc8c21d8713d4271510/cancel",
+				"description": "## Cancel Subscription\n\nThis endpoint allows users to cancel a specific subscription identified by its unique ID.\n\n### Request\n\n- **Method:** PUT\n    \n- **Endpoint:** `{{localurl}}api/v1/subscriptions/{subscriptionId}/cancel`\n    \n    - Replace `{subscriptionId}` with the actual subscription ID you wish to cancel.\n        \n\n### Request Body\n\nThe request body must be in JSON format and contain the following parameters:\n\n- **name** (string): The name of the subscription (e.g., \"Netflix Premium\").\n    \n- **price** (integer): The price of the subscription (e.g., 499).\n    \n- **currency** (string): The currency in which the price is denominated (e.g., \"INR\").\n    \n- **frequency** (string): The billing frequency for the subscription (e.g., \"monthly\").\n    \n- **category** (string): The category of the subscription (e.g., \"entertainment\").\n    \n- **paymentMethod** (string): The method used for payment (e.g., \"Credit Card\").\n    \n- **status** (string): The current status of the subscription (e.g., \"active\").\n    \n- **startDate** (string): The start date of the subscription in ISO 8601 format (e.g., \"2025-05-01T00:00:00.000Z\").\n    \n- **user** (string): The unique identifier of the user associated with the subscription.\n    \n\n### Response\n\n- **Status Code:** 403\n    \n- **Content-Type:** application/json\n    \n- **Response Body:**\n    \n    - A JSON object containing a message. The message may provide additional context regarding the failure of the request.\n        \n\n### Notes\n\nA 403 status code typically indicates that the request was understood by the server, but the server is refusing to fulfill it, possibly due to insufficient permissions or an invalid request state."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQwNjRkZGU0YmVjNDM1YjNhYWUwMTUiLCJpYXQiOjE3NDkwNTA1ODksImV4cCI6MTc0OTEzNjk4OX0.7Q0HzqXqE_axX4qAH9zXGiBhu0Us4P-V2T6hzpPVhgQ"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "{{localurl}}api/v1/subscriptions/68406fc8c21d8713d4271510/",
+				"description": "## DELETE Subscription\n\nThis endpoint allows you to delete a specific subscription identified by its unique ID. The request is made to the URL `{{localurl}}api/v1/subscriptions/{subscription_id}/`, where `{subscription_id}` is the unique identifier for the subscription you wish to remove.\n\n### Request\n\n- **Method**: DELETE\n    \n- **URL**: `{{localurl}}api/v1/subscriptions/{subscription_id}/`\n    \n- **Request Body**: This request does not require a body. Simply specify the subscription ID in the URL.\n    \n\n### Response\n\n- **Status Code**: 204 No Content\n    \n- **Content-Type**: text/xml\n    \n- **Response Body**: The response body will be empty, indicating that the subscription has been successfully deleted.\n    \n\n### Notes\n\n- A successful deletion will result in a 204 status code, confirming that the request was processed successfully without returning any content.\n    \n- Ensure that the subscription ID provided in the URL is valid and corresponds to an existing subscription in the system."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "localurl",
+			"value": "http://localhost:3000/",
+			"type": "default"
+		}
+	]
+}
